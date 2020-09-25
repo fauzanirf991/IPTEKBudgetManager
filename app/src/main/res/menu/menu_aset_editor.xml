@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.fauzan.ukmbudgetmanager.divaset.asetEditor">
+    <item
+        android:id="@+id/menu_edit"
+        android:title="Edit"
+        android:icon="@android:drawable/ic_menu_edit"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/menu_hapus"
+        android:title="Hapus"
+        android:icon="@android:drawable/ic_menu_delete"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/menu_save"
+        android:title="Simpan"
+        android:icon="@android:drawable/ic_menu_save"
+        app:showAsAction="always"
+        >
+
+    </item>
+
+
+</menu>

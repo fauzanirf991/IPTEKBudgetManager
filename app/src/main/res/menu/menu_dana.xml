@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.fauzan.ukmbudgetmanager.divdana.IncomeActivity">
+    <item
+        android:id="@+id/menu_tambah"
+        android:title="Tambah"
+        android:icon="@android:drawable/ic_menu_add"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/menu_edit"
+        android:title="Edit"
+        android:icon="@android:drawable/ic_menu_edit"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/menu_hapus"
+        android:title="Hapus"
+        android:icon="@android:drawable/ic_menu_delete"
+        app:showAsAction="always"/>
+
+
+</menu>

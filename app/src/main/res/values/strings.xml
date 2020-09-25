@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">IPTEK Budget Manager</string>
+    <string name="title_activity_event_list">Daftar Kegiatan</string>
+    <string name="title_dana">Pagudana</string>
+    <string name="title_outcome">Pengeluaran Kegiatan</string>
+    <string name="title_kas">Daftar Kas</string>
+    <string name="title_aset">Daftar aset</string>
+    <string name="rupiah">Rp. </string>
+</resources>

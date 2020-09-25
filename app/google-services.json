@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "311705449097",
+    "firebase_url": "https://keuangan-9fee8.firebaseio.com",
+    "project_id": "keuangan-9fee8",
+    "storage_bucket": "keuangan-9fee8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:311705449097:android:8c8d86cf361a84afd68c58",
+        "android_client_info": {
+          "package_name": "com.fauzan.authkeuangan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "311705449097-2g7qilt8g5jd3o41ktsk1uucmqa65vp7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6QiNpxPPk2LzImaRarLLzs5j0HHhrh70"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "311705449097-2g7qilt8g5jd3o41ktsk1uucmqa65vp7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:311705449097:android:7b8b287f0c0162c4d68c58",
+        "android_client_info": {
+          "package_name": "com.fauzan.ukmbudgetmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "311705449097-2g7qilt8g5jd3o41ktsk1uucmqa65vp7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6QiNpxPPk2LzImaRarLLzs5j0HHhrh70"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "311705449097-2g7qilt8g5jd3o41ktsk1uucmqa65vp7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
