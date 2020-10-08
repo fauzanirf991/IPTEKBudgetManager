@@ -1,17 +1,12 @@
 package com.fauzan.ukmbudgetmanager.divlaporan;
 
-import androidx.appcompat.app.AppCompatActivity;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.io.File;
-import org.json.*;
 
 import com.fauzan.ukmbudgetmanager.R;
 import com.fauzan.ukmbudgetmanager.divkas.kastotal;
@@ -21,15 +16,24 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.opencsv.CSVWriter;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.appcompat.app.AppCompatActivity;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class laporanActivity extends AppCompatActivity {
     private TextView ttlDana_txt, ttlPengeluaran_txt, ttlKas_txt, sisaDana_txt,
             ttlAset_txt, ttlKegiatan_txt;
+    private Button cetaktbl_btn;
     private int ttlDana, ttlPengeluaran, ttlKas, sisaDana, ttlAset, ttlKegiatan, total_aset, total_kegiatan;
     private List<danaTotal> danaTotalList;
     BaseApiService apiInterface;
@@ -50,6 +54,15 @@ public class laporanActivity extends AppCompatActivity {
         ttlAset_txt = findViewById(R.id.ttlaset_txt);
         ttlKegiatan_txt = findViewById(R.id.ttlkegiatan_txt);
         sisaDana_txt = findViewById(R.id.sisadana_txt);
+        cetaktbl_btn = findViewById(R.id.cetak_btn);
+
+        cetaktbl_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+            }
+        });
 
         totalDana();
         totalKas();
@@ -266,11 +279,7 @@ public class laporanActivity extends AppCompatActivity {
 
     }
 
-    private void cetakTabel(){
-        String csv = (Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyCsvFile.csv"); // Here csv file name is MyCsvFile.csv
 
-
-    }
 
 
 }
