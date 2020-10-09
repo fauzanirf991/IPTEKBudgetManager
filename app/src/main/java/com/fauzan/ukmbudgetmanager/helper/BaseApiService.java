@@ -29,14 +29,16 @@ public interface BaseApiService {
     @FormUrlEncoded
     @POST("login.php")
     Call<ResponseBody> loginRequest(@Field("username") String username,
-                                    @Field("password") String password);
+                                    @Field("password") String password,
+                                    @Field("usertype")  int usertype);
 
 
     @FormUrlEncoded
     @POST("register.php")
     Call<ResponseBody> registerRequest(@Field("nama") String nama,
                                        @Field("username") String username,
-                                       @Field("password") String password);
+                                       @Field("password") String password,
+                                       @Field("usertype")  int usertype);
 
     @FormUrlEncoded
     @POST("checkemail.php")

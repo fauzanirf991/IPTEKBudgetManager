@@ -63,7 +63,7 @@
                 android:id="@+id/radio_anggota"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Bukan Bendahara"
+                android:text="Ketua"
                 android:textSize="18sp"
                 android:textColor="@android:color/white"/>
         </RadioGroup>

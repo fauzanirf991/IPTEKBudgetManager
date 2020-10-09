@@ -47,6 +47,22 @@
                 android:textSize="16dip"
                 android:textColor="@android:color/white"/>
 
+            <TextView
+                android:text="Tipe Pengguna"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Spinner
+                android:id="@+id/usertype_sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="5dp"
+                android:hint="Pilih Tipe Pengguna"
+                android:fontFamily="sans-serif-light"
+                android:inputType="textPersonName" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/nama"
                 android:layout_width="match_parent"

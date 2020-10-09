@@ -4,10 +4,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.fauzan.ukmbudgetmanager.R;
@@ -30,9 +34,13 @@ public class RegisterActivity extends AppCompatActivity {
 
     private ProgressDialog loading;
     private Button btn_register;
+    private Spinner usertype_sp;
     private EditText txt_nama, txt_username, txt_password, txt_confirm_password;
     Context mContext;
     BaseApiService mApiService;
+    private int mUser = 0;
+    public static final int user_bendahara = 1;
+    public static final int user_ketua = 2;
     Intent intent;
 
 
@@ -51,6 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void initComponents(){
         btn_register = findViewById(R.id.btn_register);
+        usertype_sp = findViewById(R.id.usertype_sp);
         txt_nama = findViewById(R.id.txt_nama);
         txt_username = findViewById(R.id.txt_username);
         txt_password = findViewById(R.id.txt_password);
@@ -66,10 +75,37 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    private void setupSpinner(){
+        ArrayAdapter genderSpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.array_usertype, android.R.layout.simple_spinner_item);
+        genderSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        usertype_sp.setAdapter(genderSpinnerAdapter);
+
+        usertype_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selection = (String) parent.getItemAtPosition(position);
+                if (!TextUtils.isEmpty(selection)) {
+                    if (selection.equals(getString(R.string.user_bendahara))) {
+                        mUser = user_bendahara;
+                    } else if (selection.equals(getString(R.string.user_ketua))) {
+                        mUser = user_ketua;
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                mUser = 0;
+            }
+        });
+    }
+
+
+
     private void requestRegister(){
         mApiService.registerRequest(txt_nama.getText().toString(),
                 txt_username.getText().toString(),
-                txt_password.getText().toString())
+                txt_password.getText().toString(), mUser)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

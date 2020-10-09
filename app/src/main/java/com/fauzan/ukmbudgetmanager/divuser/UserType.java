@@ -28,12 +28,17 @@ public class UserType extends AppCompatActivity {
                 switch (id){
                     case R.id.radio_bendahara :
                         //tipe bendahara ke loginactivity
-                        startActivity(new Intent(UserType.this, LoginActivity.class ));
+
+                        Intent intent = new Intent(UserType.this, LoginActivity.class );
+                        intent.putExtra("user_bendahara",1);
+                        startActivity(intent);
                         finish();
                         break;
                     case R.id.radio_anggota :
                         //tipe anggota ke dashboard2activity
-                        startActivity(new Intent(UserType.this, Dashboard2Activity.class ));
+                        Intent intent2 = new Intent(UserType.this, LoginActivity.class );
+                        intent2.putExtra("user_ketua",2);
+                        startActivity(intent2);
                         finish();
                         break;
                 }

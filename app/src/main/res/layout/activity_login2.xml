@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
     android:padding="15dp"
-    tools:context="com.fauzan.ukmbudgetmanager.divuser.LoginActivity">
+    tools:context="com.fauzan.ukmbudgetmanager.divuser.LoginActivity2">
 
 
     <androidx.appcompat.widget.LinearLayoutCompat

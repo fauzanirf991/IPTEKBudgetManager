@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".divuser.changePassword"/>
+        <activity android:name=".divuser.LoginActivity2"></activity>
+        <activity android:name=".divuser.changePassword" />
         <activity android:name=".divuser.confirmUser" />
         <activity android:name=".divabout.aboutActivity" />
         <activity android:name=".divabout.helpActivity" />

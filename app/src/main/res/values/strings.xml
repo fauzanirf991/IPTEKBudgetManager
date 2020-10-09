@@ -6,4 +6,6 @@
     <string name="title_kas">Daftar Kas</string>
     <string name="title_aset">Daftar aset</string>
     <string name="rupiah">Rp. </string>
+    <string name="user_bendahara">Bendahara</string>
+    <string name="user_ketua">Ketua</string>
 </resources>

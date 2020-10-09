@@ -25,6 +25,7 @@ public class Dashboard2Activity extends AppCompatActivity {
 
     Button btn_logout, btn_kegiatan, btn_dana, btn_kas, btn_stats, btn_laporan;
     TextView txt_id, txt_username;
+    String resultNama;
     private static long back_pressed;
 
 
@@ -35,6 +36,14 @@ public class Dashboard2Activity extends AppCompatActivity {
         btn_logout = findViewById(R.id.btn_logout);
 
         initComponent();
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null)
+            resultNama = extras.getString("result_nama");
+        //resultId = extras.getInt("id_bend");
+        //idbend = resultId;
+        txt_username.setText(resultNama);
+
         btn_logout.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -85,6 +94,7 @@ public class Dashboard2Activity extends AppCompatActivity {
 
     }
     private void initComponent(){
+        txt_username = findViewById(R.id.txt_username);
         btn_logout = findViewById(R.id.btn_logout);
         btn_kegiatan = findViewById(R.id.button_kegiatan);
         btn_dana = findViewById(R.id.button_dana);
