@@ -32,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     ProgressDialog loading;
     Button btn_register, btn_login, lupa_pass;
     EditText txt_username, txt_password;
+    private int mUser;
     Context mContext;
     BaseApiService mApiService;
 
@@ -44,6 +45,9 @@ public class LoginActivity extends AppCompatActivity {
         mContext = this;
         mApiService = UtilsApi.getAPIService(); // meng-init yang ada di package apihelper
         initComponents();
+
+        Intent intent = getIntent();
+        mUser = intent.getIntExtra("user_bendahara",0);
 
     }
 
@@ -77,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
     private void requestLogin(){
-        mApiService.loginRequest(txt_username.getText().toString(), txt_password.getText().toString())
+        mApiService.loginRequest(txt_username.getText().toString(), txt_password.getText().toString(), mUser)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
