@@ -5,15 +5,16 @@ $db = new DB_Functions();
 // json response array
 $response = array("error" => FALSE);
  
-if (isset($_POST['username']) && isset($_POST['password'])) {
+if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['usertype'])) {
  
     // menerima parameter POST ( username dan password )
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $usertype = $_POST['usertype'];
  
     // get the user by username and password
     // get user berdasarkan username dan password
-    $user = $db->getUserByUsernameAndPassword($username, $password);
+    $user = $db->getUserByUsernameAndPassword($username, $password, $usertype);
  
     if ($user != false) {
         // user ditemukan

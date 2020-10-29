@@ -6,18 +6,13 @@ $db = new DB_Functions();
 // json response array
 $response = array("error" => FALSE);
  
-if (isset($_POST['nama']) && isset($_POST['username']) && isset($_POST['password'])) {
+if (isset($_POST['nama']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['usertype'])) {
  
     // menerima parameter POST ( nama, username, password )
     $nama = $_POST['nama'];
     $username = $_POST['username'];
     $password = $_POST['password'];
-    //cek jika user lebih dari satu
-    if($db->checknumrow()){
-        $response["error"] = TRUE;
-        $response["error_msg"] = "Akses Dilarang (Sudah ada Bendahara yang mendaftar !)";
-        echo json_encode($response);
-    }else{
+    $usertype = $_POST['usertype'];
         // Cek jika user ada dengan username yang sama
         if ($db->isUserExisted($username)) {
             // user telah ada
@@ -26,7 +21,7 @@ if (isset($_POST['nama']) && isset($_POST['username']) && isset($_POST['password
             echo json_encode($response);
         } else {
             // buat user baru
-            $user = $db->simpanUser($nama, $username, $password);
+            $user = $db->simpanUser($nama, $username, $password, $usertype);
             if ($user) {
                 // simpan user berhasil
                 $response["error"] = FALSE;
@@ -41,8 +36,7 @@ if (isset($_POST['nama']) && isset($_POST['username']) && isset($_POST['password
                 echo json_encode($response);
             }
         }
-    }
-} else {
+    } else {
     $response["error"] = TRUE;
     $response["error_msg"] = "Parameter (nama, username, atau password) ada yang kurang";
     echo json_encode($response);

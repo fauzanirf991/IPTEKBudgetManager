@@ -18,15 +18,15 @@ class DB_Functions {
          
     }
  
-    public function simpanUser($nama, $username, $password) {
+    public function simpanUser($nama, $username, $password, $usertype) {
         $uuid = uniqid('', true);
-        $uuid = substr($unique, strlen($uuid) - 4, strlen($uuid));
+        //$uuid = substr($unique, strlen($uuid) - 4, strlen($uuid));
         $hash = $this->hashSSHA($password);
         $encrypted_password = $hash["encrypted"]; // encrypted password
         $salt = $hash["salt"]; // salt
  
-        $stmt = $this->conn->prepare("INSERT INTO tbl_user(unique_id, nama, email, encrypted_password, salt) VALUES(?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssss", $uuid, $nama, $username, $encrypted_password, $salt);
+        $stmt = $this->conn->prepare("INSERT INTO tbl_user(unique_id, nama, email, encrypted_password, salt, usertype) VALUES(?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssss", $uuid, $nama, $username, $encrypted_password, $salt, $usertype);
         $result = $stmt->execute();
         $stmt->close();
  
@@ -49,7 +49,7 @@ class DB_Functions {
     /**
      * Get user berdasarkan username dan password
      */
-    public function getUserByUsernameAndPassword($username, $password) {
+    public function getUserByUsernameAndPassword($username, $password, $usertype) {
         $stmt = $this->conn->prepare("SELECT * FROM tbl_user WHERE email = ?");
         $stmt->bind_param("s", $username);
         if ($stmt->execute()) {
@@ -63,7 +63,11 @@ class DB_Functions {
             // cek password jika sesuai
             if ($encrypted_password == $hash) {
                 // autentikasi user berhasil
-                return $user;
+                
+                $tipeuser = $user['usertype'];
+                if($usertype = $tipeuser){
+                    return $user;
+                }
             }
         } else {
             return NULL;
@@ -80,11 +84,11 @@ class DB_Functions {
         $stmt->store_result();
         if ($stmt->num_rows > 0) {
             // user telah ada 
-            $stmt->close();
+            //$stmt->close();
             return true;
         } else {
             // user belum ada 
-            $stmt->close();
+            //$stmt->close();
             return false;
         }
     }
@@ -115,19 +119,6 @@ class DB_Functions {
         return $hash;
     }
 
-    public function checknumrow(){
-        $stmt = $this->conn->prepare("SELECT email from tbl_user");
-        $stmt->execute();
- 
-        $stmt->store_result();
-        if($stmt->num_rows > 0){
-            return true;
-        }else{
-
-            return false;
-        }
-
-    }
     //check username
     public function checkusername($username){
         $stmt = $this->conn->prepare("SELECT email from tbl_user WHERE email=?");
