@@ -1,2 +1,9 @@
-include ':app'
-rootProject.name='UKMBudgetManager'
+pluginManagement { repositories { google(); mavenCentral(); gradlePluginPortal() } }
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories { google(); mavenCentral() }
+}
+rootProject.name = 'IPTEKBudgetManager'
+include ':app', ':budget-core', ':processor'
+// Original Android/PHP sources remain available for migration reference.
+project(':app').projectDir = file('android-app')

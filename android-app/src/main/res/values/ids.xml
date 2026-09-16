@@ -1,0 +1,9 @@
+<resources>
+    <item name="nav_home" type="id"/>
+    <item name="nav_transactions" type="id"/>
+    <item name="nav_events" type="id"/>
+    <item name="nav_assets" type="id"/>
+    <item name="nav_reports" type="id"/>
+    <item name="action_sync" type="id"/>
+    <item name="action_logout" type="id"/>
+</resources>

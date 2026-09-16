@@ -1,0 +1,14 @@
+{
+  "importId": "legacy-sample-2020",
+  "timezone": "Asia/Jakarta",
+  "periods": [{"id":"2020","start":"2020-01-01","end":"2020-12-31","status":"CLOSED"}],
+  "expectedBalances": {"PAGUDANA":10680000,"KAS":100000},
+  "receiptFiles": {},
+  "records": [
+    {"id":"legacy-funding-1","kind":"FUNDING","title":"Pagudana awal","businessDate":"2020-06-16","account":"PAGUDANA","periodId":"2020","delta":12000000},
+    {"id":"legacy-event-1","kind":"EVENT","title":"Seminar Kewirausahaan","businessDate":"2020-08-24","account":"","periodId":"2020","delta":0},
+    {"id":"legacy-cash-1","kind":"CASH","title":"Iuran kas legacy","businessDate":"2020-08-17","account":"KAS","periodId":"2020","delta":100000},
+    {"id":"legacy-asset-1","kind":"ASSET","title":"Printer Epson","businessDate":"2020-08-24","account":"PAGUDANA","periodId":"2020","delta":-1200000},
+    {"id":"legacy-expense-1","kind":"EXPENSE","title":"Makanan ringan","businessDate":"2020-08-25","account":"PAGUDANA","periodId":"2020","delta":-120000,"quantity":60,"unitPrice":2000,"eventId":"legacy-event-1"}
+  ]
+}

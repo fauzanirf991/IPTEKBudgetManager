@@ -1,0 +1,80 @@
+plugins { id 'com.android.application' }
+def config = new Properties()
+def configFile = rootProject.file('firebase.local.properties')
+if (configFile.exists()) configFile.withInputStream { config.load(it) }
+def quoted = { String s -> '"' + s.replace('\\', '\\\\').replace('"', '\\"') + '"' }
+android {
+    namespace 'com.fauzan.ukmbudgetmanager'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'com.fauzan.ukmbudgetmanager'
+        minSdk 26
+        targetSdk 35
+        versionCode 2
+        versionName '2.0.0'
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        javaCompileOptions { annotationProcessorOptions { arguments += ['room.schemaLocation': "$projectDir/schemas".toString()] } }
+        buildConfigField 'String', 'ORGANIZATION', quoted(config.getProperty('organization', 'iptek'))
+    }
+    flavorDimensions 'environment'
+    productFlavors {
+        emulator {
+            dimension 'environment'
+            applicationIdSuffix '.dev'
+            buildConfigField 'boolean', 'EMULATORS', 'true'
+            buildConfigField 'String', 'PROJECT_ID', '"demo-iptek"'
+            buildConfigField 'String', 'FIREBASE_APP_ID', '"1:123456789:android:demo"'
+            buildConfigField 'String', 'API_KEY', '"demo-api-key"'
+            buildConfigField 'String', 'STORAGE_BUCKET', '"demo-iptek.appspot.com"'
+            buildConfigField 'String', 'EMULATOR_HOST', quoted(config.getProperty('emulatorHost', '10.0.2.2'))
+            buildConfigField 'String', 'PROCESSOR_URL', quoted(config.getProperty('emulatorProcessorUrl', 'http://10.0.2.2:8081'))
+        }
+        production {
+            dimension 'environment'
+            buildConfigField 'boolean', 'EMULATORS', 'false'
+            buildConfigField 'String', 'PROJECT_ID', quoted(config.getProperty('projectId', ''))
+            buildConfigField 'String', 'FIREBASE_APP_ID', quoted(config.getProperty('appId', ''))
+            buildConfigField 'String', 'API_KEY', quoted(config.getProperty('apiKey', ''))
+            buildConfigField 'String', 'STORAGE_BUCKET', quoted(config.getProperty('storageBucket', ''))
+            buildConfigField 'String', 'EMULATOR_HOST', '""'
+            buildConfigField 'String', 'PROCESSOR_URL', quoted(config.getProperty('processorUrl', ''))
+        }
+    }
+    buildFeatures { viewBinding true; buildConfig true }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+    testOptions { unitTests.includeAndroidResources = true }
+}
+dependencies {
+    implementation project(':budget-core')
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.fragment:fragment:1.8.6'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.8.7'
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.8.7'
+    implementation 'androidx.recyclerview:recyclerview:1.4.0'
+    implementation 'androidx.room:room-runtime:2.6.1'
+    annotationProcessor 'androidx.room:room-compiler:2.6.1'
+    implementation 'androidx.work:work-runtime:2.10.0'
+    implementation platform('com.google.firebase:firebase-bom:33.16.0')
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-storage'
+    implementation 'com.google.code.gson:gson:2.11.0'
+    implementation 'com.google.guava:guava:33.4.0-android'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.14.1'
+    testImplementation 'androidx.test:core:1.6.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test:runner:1.6.2'
+}
+tasks.register('verifyProductionConfiguration') {
+    doLast {
+        ['projectId', 'appId', 'apiKey', 'storageBucket', 'processorUrl'].each {
+            if (!config.getProperty(it, '').trim()) throw new GradleException("Missing ${it} in firebase.local.properties")
+        }
+        if (!config.getProperty('processorUrl').startsWith('https://')) throw new GradleException('Production processor must use HTTPS')
+    }
+}
+tasks.configureEach {
+    if (name == 'preProductionDebugBuild' || name == 'preProductionReleaseBuild') dependsOn 'verifyProductionConfiguration'
+}

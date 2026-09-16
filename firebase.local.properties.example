@@ -1,0 +1,9 @@
+# Copy to firebase.local.properties for production configuration.
+projectId=
+appId=
+apiKey=
+storageBucket=
+processorUrl=
+organization=iptek
+emulatorHost=10.0.2.2
+emulatorProcessorUrl=http://10.0.2.2:8081

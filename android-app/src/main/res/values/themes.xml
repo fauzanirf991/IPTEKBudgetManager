@@ -1,0 +1,9 @@
+<resources>
+    <style name="Theme.IPTEK" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">#006B5E</item>
+        <item name="colorSecondary">#48655F</item>
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+    <string name="app_name">IPTEK Budget</string>
+</resources>
