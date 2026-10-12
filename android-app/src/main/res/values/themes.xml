@@ -1,9 +1,49 @@
 <resources>
     <style name="Theme.IPTEK" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">#006B5E</item>
-        <item name="colorSecondary">#48655F</item>
-        <item name="android:fontFamily">sans</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">@color/primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/on_primary_container</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorSecondaryContainer">@color/secondary_container</item>
+        <item name="colorSurface">@color/surface_card</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorSurfaceVariant">@color/surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
+        <item name="colorOutline">@color/text_tertiary</item>
+        <item name="colorOutlineVariant">@color/outline_subtle</item>
+        <item name="android:windowBackground">@color/surface_bg</item>
+        <item name="android:fontFamily">sans-serif</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        
+        <!-- Modern Component Styles -->
+        <item name="bottomNavigationStyle">@style/Widget.IPTEK.BottomNavigation</item>
+        <item name="materialCardViewStyle">@style/Widget.IPTEK.Card</item>
     </style>
+
+    <style name="Widget.IPTEK.BottomNavigation" parent="Widget.Material3.BottomNavigationView">
+        <item name="backgroundTint">#FFFFFF</item>
+        <item name="elevation">8dp</item>
+        <item name="itemIconTint">@color/primary</item>
+        <item name="itemTextColor">@color/primary</item>
+        <item name="itemActiveIndicatorStyle">@style/Widget.IPTEK.BottomNavIndicator</item>
+        <item name="labelVisibilityMode">labeled</item>
+    </style>
+
+    <style name="Widget.IPTEK.BottomNavIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/primary_container</item>
+        <item name="android:width">56dp</item>
+        <item name="android:height">32dp</item>
+    </style>
+
+    <style name="Widget.IPTEK.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardElevation">2dp</item>
+        <item name="cardCornerRadius">18dp</item>
+        <item name="strokeColor">@color/outline_subtle</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cardBackgroundColor">#FFFFFF</item>
+    </style>
+
     <string name="app_name">IPTEK Budget</string>
 </resources>

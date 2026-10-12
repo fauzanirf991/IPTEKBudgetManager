@@ -1,6 +1,147 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/root" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
-    <com.google.android.material.appbar.MaterialToolbar android:id="@+id/toolbar" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="56dp" />
-    <TextView android:id="@+id/status" android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingHorizontal="20dp" android:paddingVertical="8dp" android:textSize="12sp" android:accessibilityLiveRegion="polite" />
-    <FrameLayout android:id="@+id/content" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" />
-    <com.google.android.material.bottomnavigation.BottomNavigationView android:id="@+id/navigation" android:layout_width="match_parent" android:layout_height="wrap_content" />
-</LinearLayout>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface_bg">
+
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Modern Top App Bar -->
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="64dp"
+            android:background="@color/surface_card"
+            app:elevation="2dp"
+            app:title="IPTEK Budget"
+            app:titleTextAppearance="@style/TextAppearance.Material3.TitleMedium"
+            app:subtitleTextAppearance="@style/TextAppearance.Material3.BodySmall"
+            app:titleTextColor="@color/text_primary"
+            app:subtitleTextColor="@color/text_secondary" />
+
+        <!-- Status Pill Banner -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:gravity="center_vertical"
+            android:background="@color/surface_card">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:background="@drawable/bg_pill_chip">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_shield_lock"
+                    app:tint="@color/primary"
+                    android:importantForAccessibility="no" />
+
+                <TextView
+                    android:id="@+id/status"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:textColor="@color/primary"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:accessibilityLiveRegion="polite" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Main Content Area -->
+        <FrameLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Modern Bottom Navigation Bar -->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!-- Modern Screen Lock Overlay -->
+    <LinearLayout
+        android:id="@+id/lockPanel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="32dp"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@color/surface_card">
+
+        <!-- Glowing Security Shield Icon -->
+        <FrameLayout
+            android:layout_width="112dp"
+            android:layout_height="112dp">
+
+            <View
+                android:layout_width="112dp"
+                android:layout_height="112dp"
+                android:background="@drawable/bg_lock_glow" />
+
+            <ImageView
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_shield_lock"
+                app:tint="@color/primary"
+                android:importantForAccessibility="no" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/lockTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/lockMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="16dp"
+            android:textSize="14sp"
+            android:lineSpacingExtra="3dp"
+            android:textColor="@color/text_secondary"
+            android:gravity="center"
+            android:accessibilityLiveRegion="polite" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/lockButton"
+            android:layout_width="wrap_content"
+            android:layout_height="54dp"
+            android:layout_marginTop="32dp"
+            android:paddingHorizontal="28dp"
+            app:cornerRadius="27dp"
+            app:icon="@drawable/ic_fingerprint"
+            app:iconPadding="10dp"
+            app:iconSize="20dp"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</FrameLayout>

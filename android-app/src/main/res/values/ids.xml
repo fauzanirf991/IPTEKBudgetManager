@@ -4,6 +4,6 @@
     <item name="nav_events" type="id"/>
     <item name="nav_assets" type="id"/>
     <item name="nav_reports" type="id"/>
-    <item name="action_sync" type="id"/>
-    <item name="action_logout" type="id"/>
+    <item name="action_periods" type="id"/>
+    <item name="action_lock" type="id"/>
 </resources>

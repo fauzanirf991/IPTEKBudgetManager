@@ -27,7 +27,7 @@ class FinanceTest {
         assertThrows(IllegalArgumentException.class, () -> Checks.id("../../members"));
     }
     @Test void reportUsesInclusiveDatesAndCorrectOpeningAcrossYears() {
-        Snapshot s = new Snapshot(); s.complete = true; s.revision = 7;
+        Snapshot s = new Snapshot(); s.revision = 7;
         s.records.add(row("a", "KAS", "2025-12-30", 100));
         s.records.add(row("b", "KAS", "2025-12-31", 50));
         s.records.add(row("c", "KAS", "2026-01-01", -20));
@@ -37,18 +37,17 @@ class FinanceTest {
         assertEquals(20, kas.outflow); assertEquals(130, kas.closing); assertEquals(2, report.rows.size()); assertEquals(7, report.revision);
     }
     @Test void oneDayAndAccountSelectionExcludeOtherRecords() {
-        Snapshot s = new Snapshot(); s.complete = true;
+        Snapshot s = new Snapshot();
         s.records.add(row("a", "KAS", "2026-09-16", 10)); s.records.add(row("b", "PAGUDANA", "2026-09-16", 50));
         assertEquals(1, Report.calculate(s, "2026-09-16", "2026-09-16", "KAS").rows.size());
     }
-    @Test void missingCoverageIsNotZero() {
-        Snapshot s = new Snapshot();
-        assertThrows(IllegalArgumentException.class, () -> Report.calculate(s, "2026-01-01", "2026-12-31", "ALL"));
-        s.complete = true; assertEquals(0, Report.calculate(s, "2026-01-01", "2026-12-31", "ALL").accounts.get("KAS").closing);
+    @Test void missingLedgerIsRejectedAndEmptyLedgerIsZero() {
+        assertThrows(IllegalArgumentException.class, () -> Report.calculate(null, "2026-01-01", "2026-12-31", "ALL"));
+        Snapshot s = new Snapshot(); assertEquals(0, Report.calculate(s, "2026-01-01", "2026-12-31", "ALL").accounts.get("KAS").closing);
         assertThrows(IllegalArgumentException.class, () -> Report.calculate(s, "2026-12-31", "2026-01-01", "ALL"));
     }
     @Test void originalSampleReconcilesWithoutCombiningKas() {
-        Snapshot s = new Snapshot(); s.complete = true;
+        Snapshot s = new Snapshot();
         s.records.add(row("fund", "PAGUDANA", "2020-06-16", 12000000));
         s.records.add(row("asset", "PAGUDANA", "2020-08-24", -1200000));
         s.records.add(row("expense", "PAGUDANA", "2020-08-25", -120000));
@@ -57,7 +56,7 @@ class FinanceTest {
         assertEquals(10680000, report.accounts.get("PAGUDANA").closing); assertEquals(100000, report.accounts.get("KAS").closing);
     }
     @Test void reversalRemainsInAuditAndRecomputesReport() {
-        Snapshot s = new Snapshot(); s.complete = true;
+        Snapshot s = new Snapshot();
         s.records.add(row("a", "KAS", "2026-09-01", 100));
         s.records.add(row("b", "KAS", "2026-09-02", -25));
         Record reversal = row("c", "KAS", "2026-09-02", 25); reversal.kind = "VOID"; s.records.add(reversal);

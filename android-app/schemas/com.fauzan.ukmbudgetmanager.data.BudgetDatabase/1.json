@@ -2,18 +2,12 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "403feecb72fa241c3cea63a3c69ecda4",
+    "identityHash": "9d1a7b705bf61adcab8b8911d82bc492",
     "entities": [
       {
-        "tableName": "outbox",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`owner` TEXT NOT NULL, `id` TEXT NOT NULL, `payload` TEXT, `state` TEXT, `message` TEXT, `receiptFile` TEXT, `receiptType` TEXT, `createdAt` INTEGER NOT NULL, PRIMARY KEY(`owner`, `id`))",
+        "tableName": "records",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `kind` TEXT, `businessDate` TEXT, `periodId` TEXT, `payload` TEXT, PRIMARY KEY(`id`))",
         "fields": [
-          {
-            "fieldPath": "owner",
-            "columnName": "owner",
-            "affinity": "TEXT",
-            "notNull": true
-          },
           {
             "fieldPath": "id",
             "columnName": "id",
@@ -21,60 +15,89 @@
             "notNull": true
           },
           {
+            "fieldPath": "kind",
+            "columnName": "kind",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "businessDate",
+            "columnName": "businessDate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "periodId",
+            "columnName": "periodId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
             "fieldPath": "payload",
             "columnName": "payload",
             "affinity": "TEXT",
             "notNull": false
-          },
-          {
-            "fieldPath": "state",
-            "columnName": "state",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "message",
-            "columnName": "message",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "receiptFile",
-            "columnName": "receiptFile",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "receiptType",
-            "columnName": "receiptType",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "createdAt",
-            "columnName": "createdAt",
-            "affinity": "INTEGER",
-            "notNull": true
           }
         ],
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "owner",
             "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_records_businessDate",
+            "unique": false,
+            "columnNames": [
+              "businessDate"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_records_businessDate` ON `${TABLE_NAME}` (`businessDate`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "meta",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `payload` TEXT, PRIMARY KEY(`name`))",
+        "fields": [
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "payload",
+            "columnName": "payload",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "name"
           ]
         },
         "indices": [],
         "foreignKeys": []
       },
       {
-        "tableName": "snapshots",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`owner` TEXT NOT NULL, `payload` TEXT, PRIMARY KEY(`owner`))",
+        "tableName": "audit",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recordId` TEXT NOT NULL, `revision` INTEGER NOT NULL, `payload` TEXT, PRIMARY KEY(`recordId`))",
         "fields": [
           {
-            "fieldPath": "owner",
-            "columnName": "owner",
+            "fieldPath": "recordId",
+            "columnName": "recordId",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revision",
+            "columnName": "revision",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -87,7 +110,7 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "owner"
+            "recordId"
           ]
         },
         "indices": [],
@@ -97,7 +120,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '403feecb72fa241c3cea63a3c69ecda4')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9d1a7b705bf61adcab8b8911d82bc492')"
     ]
   }
 }

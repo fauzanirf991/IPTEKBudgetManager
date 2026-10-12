@@ -15,10 +15,7 @@
 
 .tools/
 **/build/
-node_modules/
-.firebase/
 *-debug.log
-firebase.local.properties
 service-account*.json
 *.jks
 *.keystore

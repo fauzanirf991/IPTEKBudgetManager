@@ -4,6 +4,6 @@ dependencyResolutionManagement {
     repositories { google(); mavenCentral() }
 }
 rootProject.name = 'IPTEKBudgetManager'
-include ':app', ':budget-core', ':processor'
+include ':app', ':budget-core'
 // Original Android/PHP sources remain available for migration reference.
 project(':app').projectDir = file('android-app')

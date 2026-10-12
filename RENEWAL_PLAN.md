@@ -1,3 +1,5 @@
+> **Superseded.** This is the historical Firebase-based renewal plan. The app is now fully offline and on-device with no login; see [README](README.md) and [implementation status](docs/IMPLEMENTATION_STATUS.md). The `processor/`, `firebase/` and migration folders it mentions no longer exist (they remain in git history).
+
 # IPTEK Budget Manager renewal plan
 
 Prepared 16 September 2026.

@@ -1,23 +1,35 @@
-# Device acceptance before production release
+# Device acceptance checklist (offline build)
 
-Run on API 26 and a current supported Android device, including one small-screen device. The app is Java/XML; JVM/Robolectric verification does not establish real-device rendering, Android Keystore behavior, WorkManager scheduling or picker integration.
+Run on API 26 and a current Android device, including one small-screen device, **in airplane mode**. Robolectric cannot exercise `BiometricPrompt`, the Android Keystore, the document picker or real rendering, so these steps are required before relying on the app. Do not use real financial records during tests.
 
-Use the local setup in README first. Repeat against a dedicated staging Firebase project before production. Do not use real credentials or real financial records in demo tests.
+## Screen lock
 
-1. Sign in as Bendahara, complete initial sync, and verify the open period. Sign in as Ketua on a second device and verify all financial modification actions are hidden.
-2. Add pagudana and kas separately. Create an event, an expense with quantity/unit price, and an asset with a receipt. Verify totals and receipt access as both users.
-3. Enable airplane mode. Create an event followed by its expense, stage a receipt, and save contributions. Verify local status rather than confirmed totals changing.
-4. Force-stop and reopen the app while offline. Confirm the saved queue and encrypted receipt staging remain available. Reboot and repeat. Do not clear application storage.
-5. Restore connectivity. Check each operation is accepted exactly once and appears on the second device. Interrupt connectivity during image upload and after server acceptance; retries must not duplicate postings.
-6. Use the second device to spend the remaining balance before the first reconnects. Verify the losing expense is rejected with its input retained and no negative balance. Repeat with a closed period and revoked/downgraded membership.
-7. Correct a purchase amount. Verify the old entry, its reversal, the replacement and the new balance. Retry the correction and ensure it cannot be applied twice. Archive an asset and verify that no money is refunded.
-8. Rename/archive an event on one device while another has stale details. Verify stale edits are rejected and archived events cannot receive new expenses.
-9. Select a one-day report, a cross-month report and a cross-year report. Compare opening + inflow - outflow with closing for each account. Pending entries must be visibly separate. Search must filter details without silently altering account summaries.
-10. Download a report, go offline and view the same/custom ranges within the complete snapshot. Verify the last-sync label. On a fresh installation with no snapshot, reports must say data is unavailable rather than zero.
-11. Open a receipt online, then offline. Cancel the photo picker, select an oversized/non-image file and simulate a missing local staging file; each path must fail safely without losing other work.
-12. Logout with pending work, sign in as another user, and verify no old-user records, drafts, receipts or queue entries are displayed. Sign back into the original user and resume that user's work.
-13. Rotate during login, entry, queue and reporting. Increase font size, enable dark mode and use TalkBack. Check clipped controls, keyboard visibility, chart text alternatives and correct navigation.
-14. Test an expired session, server downtime and a rejected receipt upload. No endless disabled form, duplicate transaction or crash should result.
-15. Verify signed production APK upgrade from the actual installed app using the owner's signing key. Check target SDK/distribution policy, Firebase environment separation and release logs.
+1. With **no** screen lock set, open the app. It must show "Aktifkan kunci layar" and no financial data. Tapping the button opens Security settings.
+2. Set a PIN, return to the app. The unlock prompt appears. Cancel it: the lock panel stays, with no data visible. Tap "Buka kunci", enter the PIN: data appears.
+3. Repeat with a fingerprint or face enrolled, where the device has one.
+4. Press Home, wait more than 60 s, reopen: the app is locked. Reopen within 60 s: it stays open.
+5. Use the toolbar action "Kunci sekarang": the app locks at once and any open dialog is dismissed.
+6. While unlocked, remove the screen lock in Settings, return to the app: it must lock and ask for a new lock. After setting a lock again, all data must still be there.
+7. Open Recents and try a screenshot, on the main screen and while a dialog is open: the thumbnail is blank and screenshots are blocked.
+8. Rotate the screen while unlocked: the app must not lock.
 
-Record device model, Android version, build hash, scenario outcome and any screenshots/crash logs. Production acceptance remains open until these scenarios pass; do not equate passing unit tests with completing this checklist.
+## Ledger
+
+9. Add a pagudana and a kas contribution. Totals must change immediately and stay separate per account.
+10. Create an event, then an expense with quantity and unit price. Try an expense larger than the balance: it is rejected at once with "Saldo tidak mencukupi" and nothing changes.
+11. Add an asset with a receipt photo. Open the receipt. Try cancelling the picker, an oversized file and a non-image file: each fails safely.
+12. Correct an asset amount: the old entry, its reversal, the replacement and the new balance are all visible, and the receipt is kept. Cancel a transaction twice: the second attempt is refused.
+13. Rename and archive an event. An archived event cannot take new expenses. Archive an asset: no cash is refunded.
+14. Close a period from the toolbar menu: new postings for that year are rejected. Reopen it: they work again.
+15. Run one-day, cross-month and cross-year reports. Opening + inflow - outflow must equal closing for each account. Search must filter details without changing the summaries.
+16. Force-stop the app and reopen it, then reboot and reopen it. Data and receipts must persist after unlock.
+17. Fill a long form, press Home, then reopen after more than 60 s: after unlock, no unsaved draft from before the lock should be shown.
+
+## Device and quality checks
+
+18. Confirm the installed app lists no network permission in system App info.
+19. Increase font size, enable dark mode and use TalkBack. Check clipped controls, keyboard overlap and navigation.
+20. Fill the storage almost completely and try saving a receipt: the posting must fail as a whole, with nothing half-saved.
+21. Check the upgrade from a build signed with the owner's release key. Uninstalling must warn that data is lost (documented in README).
+
+Record device model, Android version, build hash, outcome and screenshots or crash logs. Acceptance stays open until these pass; passing unit tests does not complete this list.

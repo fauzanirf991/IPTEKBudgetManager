@@ -2,14 +2,19 @@ package com.fauzan.ukmbudgetmanager.data;
 
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
-import android.util.Base64;
 import java.security.KeyStore;
 import javax.crypto.*;
 import javax.crypto.spec.GCMParameterSpec;
 
-/** Payloads and staged receipts are encrypted with a non-exportable device key. */
+/** Ledger rows and receipts are encrypted at rest with a non-exportable device key (Android Keystore, AES-GCM). */
 public final class LocalVault {
     private static final String ALIAS = "iptek-local-v2";
+    /** Production {@link Sealer}. The key is deliberately not bound to the screen lock, so changing the lock never destroys data. */
+    public static final Sealer SEALER = new Sealer() {
+        @Override public byte[] encrypt(byte[] plain) throws Exception { return LocalVault.encrypt(plain); }
+        @Override public byte[] decrypt(byte[] encrypted) throws Exception { return LocalVault.decrypt(encrypted); }
+    };
+    private LocalVault() {}
     private static synchronized javax.crypto.SecretKey key() throws Exception {
         KeyStore store = KeyStore.getInstance("AndroidKeyStore"); store.load(null);
         if (!store.containsAlias(ALIAS)) {
@@ -32,13 +37,5 @@ public final class LocalVault {
         Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
         cipher.init(Cipher.DECRYPT_MODE, key(), new GCMParameterSpec(128, encrypted, 1, 12));
         return cipher.doFinal(encrypted, 13, encrypted.length - 13);
-    }
-    public static String seal(String value) {
-        try { return Base64.encodeToString(encrypt(value.getBytes(java.nio.charset.StandardCharsets.UTF_8)), Base64.NO_WRAP); }
-        catch (Exception e) { throw new IllegalStateException("Penyimpanan aman tidak tersedia", e); }
-    }
-    public static String open(String value) {
-        try { return new String(decrypt(Base64.decode(value, Base64.NO_WRAP)), java.nio.charset.StandardCharsets.UTF_8); }
-        catch (Exception e) { throw new IllegalStateException("Data lokal terkunci; jangan hapus data yang belum sinkron", e); }
     }
 }

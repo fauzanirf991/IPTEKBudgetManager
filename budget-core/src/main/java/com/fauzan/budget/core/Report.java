@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/** Pure Java reporting over one complete accepted snapshot. Pending commands are never input. */
+/** Pure Java reporting over the complete local ledger snapshot. */
 public final class Report {
     public static final class Totals {
         public long opening, inflow, outflow, closing;
@@ -19,7 +19,7 @@ public final class Report {
     public static Report calculate(Snapshot data, String start, String end, String account) {
         LocalDate from = Checks.date(start), until = Checks.date(end);
         if (until.isBefore(from)) throw new IllegalArgumentException("Tanggal akhir sebelum tanggal awal");
-        if (data == null || !data.complete) throw new IllegalArgumentException("Data belum lengkap. Hubungkan internet untuk sinkronisasi.");
+        if (data == null) throw new IllegalArgumentException("Data belum tersedia.");
         if (!"ALL".equals(account)) Checks.account(account);
         Report report = new Report(); report.revision = data.revision;
         report.accounts.put("PAGUDANA", new Totals()); report.accounts.put("KAS", new Totals());

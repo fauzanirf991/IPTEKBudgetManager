@@ -1,4 +1,4 @@
-name: Verify renewed app
+name: Verify offline app
 on: [push, pull_request]
 jobs:
   build:
@@ -9,16 +9,15 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: npm
       - uses: android-actions/setup-android@v3
       - run: chmod +x gradlew
-      - run: npm ci
-      - run: ./gradlew :app:assembleEmulatorDebug :app:lintEmulatorDebug :app:testEmulatorDebugUnitTest :budget-core:test :processor:installDist
-      - run: npx firebase emulators:exec --project demo-iptek --only auth,firestore,storage "node scripts/integration.mjs"
+      - run: ./gradlew :budget-core:test :app:testDebugUnitTest :app:lintDebug :app:assembleDebug
+      - name: Fail if the app requests network access
+        run: |
+          if grep -q 'android.permission.INTERNET' android-app/build/intermediates/merged_manifests/debug/*/AndroidManifest.xml 2>/dev/null \
+             || grep -rq 'android.permission.INTERNET' android-app/build/intermediates/merged_manifests/debug 2>/dev/null; then
+            echo "INTERNET permission found"; exit 1; fi
       - uses: actions/upload-artifact@v4
         with:
-          name: emulator-debug-apk
-          path: android-app/build/outputs/apk/emulator/debug/*.apk
+          name: debug-apk
+          path: android-app/build/outputs/apk/debug/*.apk

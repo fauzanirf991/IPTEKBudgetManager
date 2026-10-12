@@ -1,0 +1,31 @@
+<resources>
+    <color name="primary">#006A60</color>
+    <color name="primary_variant">#004D40</color>
+    <color name="primary_container">#A3F2E5</color>
+    <color name="on_primary_container">#00201C</color>
+    <color name="secondary">#4A635E</color>
+    <color name="secondary_container">#CCE8E1</color>
+    <color name="surface_bg">#F5F8F7</color>
+    <color name="surface_card">#FFFFFF</color>
+    <color name="surface_variant">#DEE5E3</color>
+    <color name="text_primary">#191C1B</color>
+    <color name="text_secondary">#4E5D59</color>
+    <color name="text_tertiary">#798783</color>
+    <color name="outline_subtle">#E2E8E6</color>
+    
+    <!-- Financial semantic colors -->
+    <color name="inflow_green">#1B753C</color>
+    <color name="inflow_bg">#E6F5EC</color>
+    <color name="outflow_red">#BA1A1A</color>
+    <color name="outflow_bg">#FFEDE9</color>
+    <color name="pagudana_blue">#00639B</color>
+    <color name="pagudana_bg">#E1F1FF</color>
+    <color name="kas_teal">#006A60</color>
+    <color name="kas_bg">#E6F7F4</color>
+    <color name="event_purple">#6750A4</color>
+    <color name="event_bg">#F0EBF9</color>
+    <color name="asset_amber">#825500</color>
+    <color name="asset_bg">#FFF1D8</color>
+    <color name="neutral_badge">#484848</color>
+    <color name="neutral_bg">#EDEDED</color>
+</resources>

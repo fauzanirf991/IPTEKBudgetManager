@@ -3,11 +3,9 @@ package com.fauzan.budget.core;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Complete organization snapshot at a single transaction revision; never a partial page. */
+/** Read-only view of the whole local ledger at one revision; used for reports and lists. */
 public final class Snapshot {
-    public String role = "", organization = "", ownerUid = "", timezone = "Asia/Jakarta";
-    public long revision, downloadedAt;
-    public boolean complete;
+    public long revision;
     public List<Record> records = new ArrayList<>();
     public List<Period> periods = new ArrayList<>();
     public static final class Period {

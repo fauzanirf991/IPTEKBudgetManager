@@ -1,33 +1,34 @@
 package com.fauzan.budget.core;
 
-/** Immutable once queued: retries must retain id and all payload fields. */
+/** A single user intent. Every posting carries a unique id so that a double tap can never post twice. */
 public final class Command {
     public int schemaVersion = 1;
     public String id = "", kind = "", title = "", businessDate = "", account = "", periodId = "";
-    public String eventId = "", targetId = "", receiptPath = "";
+    public String eventId = "", targetId = "";
+    /** True when a receipt image is stored (encrypted, on this device) under this command's id. */
+    public boolean hasReceipt;
     public long amount, quantity, unitPrice, expectedRevision;
 
     public long validatedAmount() {
         if (schemaVersion != 1) throw new IllegalArgumentException("Versi data tidak didukung");
         Checks.id(id); Checks.id(periodId); Checks.date(businessDate);
         if (title == null || title.trim().isEmpty() || title.length() > 160) throw new IllegalArgumentException("Nama/alasan wajib diisi (maks. 160 karakter)");
-        if (account == null || eventId == null || targetId == null || receiptPath == null) throw new IllegalArgumentException("Data tidak lengkap");
+        if (account == null || eventId == null || targetId == null) throw new IllegalArgumentException("Data tidak lengkap");
         if (!eventId.isEmpty()) Checks.id(eventId);
         if (!targetId.isEmpty()) Checks.id(targetId);
-        if (receiptPath.length() > 300) throw new IllegalArgumentException("Referensi bukti tidak valid");
         switch (kind == null ? "" : kind) {
             case "EVENT_EDIT": case "EVENT_ARCHIVE": case "ASSET_ARCHIVE":
                 Checks.id(targetId);
-                if (expectedRevision < 1 || amount != 0 || quantity != 0 || unitPrice != 0 || !eventId.isEmpty() || !receiptPath.isEmpty() || !account.isEmpty())
+                if (expectedRevision < 1 || amount != 0 || quantity != 0 || unitPrice != 0 || !eventId.isEmpty() || hasReceipt || !account.isEmpty())
                     throw new IllegalArgumentException("Perubahan informasi tidak valid");
                 return 0;
             case "EVENT":
-                if (amount != 0 || quantity != 0 || unitPrice != 0 || !eventId.isEmpty() || !targetId.isEmpty() || !receiptPath.isEmpty())
+                if (amount != 0 || quantity != 0 || unitPrice != 0 || !eventId.isEmpty() || !targetId.isEmpty() || hasReceipt)
                     throw new IllegalArgumentException("Data kegiatan tidak valid");
                 return 0;
             case "VOID":
                 Checks.id(targetId); Checks.account(account);
-                if (amount != 0 || quantity != 0 || unitPrice != 0 || !eventId.isEmpty() || !receiptPath.isEmpty()) throw new IllegalArgumentException("Pembatalan tidak valid");
+                if (amount != 0 || quantity != 0 || unitPrice != 0 || !eventId.isEmpty() || hasReceipt) throw new IllegalArgumentException("Pembatalan tidak valid");
                 return 0;
             case "FUNDING":
                 if (!"PAGUDANA".equals(account)) throw new IllegalArgumentException("Pagudana harus masuk akun PAGUDANA");

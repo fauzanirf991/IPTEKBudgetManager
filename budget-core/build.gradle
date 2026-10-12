@@ -1,6 +1,7 @@
 plugins { id 'java-library' }
 java { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
 dependencies {
+    testImplementation 'com.google.code.gson:gson:2.11.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
